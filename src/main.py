@@ -23,11 +23,12 @@ async def send_message(message: Message, user_message: str) -> None:
         
         if response is None:
             return
-        
+
+        userId: int = message.author.id;        
         await message.delete()
         
         channel = client.get_channel(int(CHANNEL))
-        await channel.send(response)
+        await channel.send(f'Re-post <@{userId}>: ' + response)
     except Exception as e:
         print(e)
 
