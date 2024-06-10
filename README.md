@@ -14,7 +14,6 @@ pip install python-dotenv
 ### .env file
 ```
 DISCORD_TOKEN - Bot secret key
-CHANNEL - Discord channel id
 ```
 
 ## Running 

@@ -6,7 +6,6 @@ from responses import get_response
 
 load_dotenv()
 TOKEN: Final[str] = os.getenv('DISCORD_TOKEN')
-CHANNEL: Final[str] = os.getenv('CHANNEL')
 
 intents: Intents = Intents.default()
 intents.message_content = True
@@ -21,14 +20,11 @@ async def send_message(message: Message, user_message: str) -> None:
     try:
         response: str = get_response(user_message)
         
-        if response is None:
+        if response is None: 
             return
-
-        userId: int = message.author.id;        
+          
         await message.delete()
-        
-        channel = client.get_channel(int(CHANNEL))
-        await channel.send(f'Re-post <@{userId}>: ' + response)
+        await message.channel.send(f'Re-post <@{message.author.id}>: ' + response)
     except Exception as e:
         print(e)
 
@@ -46,9 +42,6 @@ async def on_message(message: Message) -> None:
     channel: str = str(message.channel)
 
     print(f'[{channel}] {username}: {user_message}')
-
-    if (message.channel.id != int(CHANNEL)):
-        return
 
     await send_message(message, user_message)
 
