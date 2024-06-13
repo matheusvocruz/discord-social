@@ -2,30 +2,33 @@ from discord import Message
 from model.response import Response
 
 class SendMessageHandler:
-    message: Message
-    response: Response = Response()
+    __message: Message
+    __response: Response = Response()
 
     def __init__(self, message: Message) -> None:
-        self.message = message
+        self.__message = message
         pass
 
-    async def handler(self) -> None:
-        if not self.message.content or self.message.content[0] == '?':
+    async def handle(self) -> None:
+        if not self.__message.content or self.__message.content[0] == '?':
             return
 
         try:
-            newMessage : str = self.response.get_message(self.message.content)
+            new_message : str = self.__response.get_message(self.__message.content)
             
-            if newMessage is None: 
+            if new_message is None: 
                 return
             
-            await self.delete()
-            await self.sendMessage(newMessage)
+            await self.__delete()
+            await self.__send_message(new_message)
         except Exception as e:
             print(e)
 
-    async def delete(self) -> None:
-        await self.message.delete()
+    async def __delete(self) -> None:
+        await self.__message.delete()
 
-    async def sendMessage(self, newMessage: str) -> None:
-        await self.message.channel.send(f'Re-post <@{self.message.author.id}>: ' + newMessage)
+    async def __send_message(self, new_message: str) -> None:
+        await self.__message.channel.send(self.__build_message(self.__message.author.id, new_message))
+
+    def __build_message(self, author: str, message: str) -> str:
+        return f'Re-post <@{author}>: ' + message
