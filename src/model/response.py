@@ -10,7 +10,7 @@ class Response:
         self.__instragram = Instagram()
         pass
 
-    def get_message(self, user_input: str) -> str:
-        if self.__twitter.validate(user_input): return self.__twitter.format(user_input)
-        elif self.__instragram.validate(user_input): return self.__instragram.format(user_input)
+    def build(self, message: str) -> str:
+        if self.__twitter.validate(message): return self.__twitter.format(message)
+        elif self.__instragram.validate(message): return self.__instragram.format(message)
         else: return

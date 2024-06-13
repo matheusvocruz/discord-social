@@ -10,11 +10,11 @@ class SendMessageHandler:
         pass
 
     async def handle(self) -> None:
-        if not self.__message.content or self.__message.content[0] == '?':
+        if self.__is_private_or_empty_message():
             return
 
         try:
-            new_message : str = self.__response.get_message(self.__message.content)
+            new_message : str = self.__response.build(self.__message.content)
             
             if new_message is None: 
                 return
@@ -32,3 +32,6 @@ class SendMessageHandler:
 
     def __build_message(self, author: str, message: str) -> str:
         return f'Re-post <@{author}>: ' + message
+    
+    def __is_private_or_empty_message(self) -> bool:
+        return not self.__message.content or self.__message.content[0] == '?'
