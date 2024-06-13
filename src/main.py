@@ -1,32 +1,13 @@
-from typing import Final
 import os
+from pathlib import Path
 from dotenv import load_dotenv
 from discord import Intents, Client, Message
-from responses import get_response
-
-load_dotenv()
-TOKEN: Final[str] = os.getenv('DISCORD_TOKEN')
+from handler.send_message_handler import SendMessageHandler
 
 intents: Intents = Intents.default()
 intents.message_content = True
 
 client: Client = Client(intents=intents)
-
-async def send_message(message: Message, user_message: str) -> None:
-    # empty or private message
-    if not user_message or user_message[0] == '?':
-        return
-
-    try:
-        response: str = get_response(user_message)
-        
-        if response is None: 
-            return
-          
-        await message.delete()
-        await message.channel.send(f'Re-post <@{message.author.id}>: ' + response)
-    except Exception as e:
-        print(e)
 
 @client.event
 async def on_ready() -> None:
@@ -34,6 +15,8 @@ async def on_ready() -> None:
 
 @client.event
 async def on_message(message: Message) -> None:
+    sendMessageHandler: SendMessageHandler = SendMessageHandler(message)
+
     if message.author == client.user:
         return 
     
@@ -43,10 +26,11 @@ async def on_message(message: Message) -> None:
 
     print(f'[{channel}] {username}: {user_message}')
 
-    await send_message(message, user_message)
+    await sendMessageHandler.handler()
 
 def main () -> None:
-    client.run(token=TOKEN)
+    load_dotenv(os.path.join(os.path.abspath(os.path.dirname(__file__)), 'config/.env'))
+    client.run(token=os.getenv('DISCORD_TOKEN'))
 
 if __name__ == '__main__':
     main()
