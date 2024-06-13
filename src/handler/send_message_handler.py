@@ -28,4 +28,4 @@ class SendMessageHandler:
         await self.message.delete()
 
     async def sendMessage(self, newMessage: str) -> None:
-        await self.essage.channel.send(f'Re-post <@{self.message.author.id}>: ' + newMessage)
+        await self.message.channel.send(f'Re-post <@{self.message.author.id}>: ' + newMessage)

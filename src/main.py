@@ -1,5 +1,4 @@
 import os
-from pathlib import Path
 from dotenv import load_dotenv
 from discord import Intents, Client, Message
 from handler.send_message_handler import SendMessageHandler
