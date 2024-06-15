@@ -13,4 +13,4 @@ class Instagram(Social):
         pass
     
     def validate(self, message: str) -> bool:
-        return re.match(self.regex, message) and re.search(self.__parameters, message)
+        return re.search(self.regex, message) and re.search(self.__parameters, message)
