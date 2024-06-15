@@ -11,4 +11,4 @@ class Twitter(Social):
         pass
 
     def validate(self, message: str) -> bool:
-        return re.search(self.regex, message)
+        return re.match(self.regex, message)
