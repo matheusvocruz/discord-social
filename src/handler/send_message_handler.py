@@ -14,21 +14,21 @@ class SendMessageHandler:
             return
 
         try:
-            new_message : str = self.__response.build(self.__message.content)
+            message: str = self.__response.build(self.__message.content)
             
-            if new_message is None: 
+            if message is None: 
                 return
             
             await self.__delete()
-            await self.__send_message(new_message)
+            await self.__send_message(message)
         except Exception as e:
             print(e)
 
     async def __delete(self) -> None:
         await self.__message.delete()
 
-    async def __send_message(self, new_message: str) -> None:
-        await self.__message.channel.send(self.__build_message(self.__message.author.id, new_message))
+    async def __send_message(self, message: str) -> None:
+        await self.__message.channel.send(self.__build_message(self.__message.author.id, message))
 
     def __build_message(self, author: str, message: str) -> str:
         return f'Re-post <@{author}>: ' + message

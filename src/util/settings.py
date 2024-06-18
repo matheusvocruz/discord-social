@@ -6,9 +6,11 @@ class Settings:
     twitter_url: str = None
     instagram_url: str = None
     tiktok_url: str = None
+    reddit_url: str = None
     twitter_regex: str = None
     instagram_regex: str = None
     tiktok_regex: str = None
+    reddit_regex: str = None
     instagram_paramater_regex: str = None
     tiktok_paramater_regex: str = None
 
@@ -19,6 +21,7 @@ class Settings:
         self.__build_twitter()
         self.__build_instagram()
         self.__build_tiktok()
+        self.__build_reddit()
         pass
 
     def __build_discord(self) -> None:
@@ -37,3 +40,7 @@ class Settings:
         self.tiktok_url = os.getenv('TIKTOK_URL')
         self.tiktok_regex = os.getenv('TIKTOK_REGEX')
         self.tiktok_paramater_regex = os.getenv('TIKTOK_PARAMETER_REGEX')
+
+    def __build_reddit(self) -> None:
+        self.reddit_url = os.getenv('REDDIT_URL')
+        self.reddit_regex = os.getenv('REDDIT_REGEX')
