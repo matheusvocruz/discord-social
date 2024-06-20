@@ -15,7 +15,7 @@ class Settings:
     tiktok_paramater_regex: str = None
 
     def __init__(self) -> None:
-        load_dotenv(os.path.join(os.path.abspath(os.path.dirname(__file__)), '../config/.env'))
+        load_dotenv(os.path.join(os.path.abspath(os.path.dirname(__file__)), '../../docs/.env'))
 
         self.__build_discord()
         self.__build_twitter()
