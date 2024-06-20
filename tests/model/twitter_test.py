@@ -1,5 +1,5 @@
 import unittest
-from src.model.twitter import Twitter 
+from model.twitter import Twitter 
 
 class TwitterTest(unittest.TestCase):
     def validate_x_successfully() -> None:
